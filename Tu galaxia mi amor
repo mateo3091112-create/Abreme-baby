@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Galaxia del Amor 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    overflow: hidden;
+    height: 100%;
+}
+
+canvas {
+    display: block;
+}
+
+.texto {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Arial, sans-serif;
+    font-size: 42px;
+    color: #ff5fa2;
+    text-shadow: 0 0 20px #ff9ad5;
+    animation: latir 1.5s infinite;
+    pointer-events: none;
+}
+
+@keyframes latir {
+    0%,100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+}
+</style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+<div class="texto">TE AMO 💖</div>
+
+<script>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+// estrellas
+const stars = [];
+for (let i = 0; i < 400; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 0.3,
+        speed: Math.random() * 0.6 + 0.2
+    });
+}
+
+function draw() {
+    ctx.fillStyle = "rgba(0,0,0,0.3)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let s of stars) {
+        ctx.beginPath();
+        ctx.fillStyle = "white";
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        s.y += s.speed;
+        if (s.y > canvas.height) {
+            s.y = 0;
+            s.x = Math.random() * canvas.width;
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
+</body>
+</html>
